@@ -7,7 +7,7 @@ const crypto = require('node:crypto');
 const { WebSocketServer, WebSocket } = require('ws');
 
 const PORT = Number(process.env.PORT) || 3000;
-const PUBLIC_DIR = path.join(__dirname, 'public');
+const PUBLIC_DIR = __dirname;
 const rooms = new Map();
 const MIME = {
   '.html': 'text/html; charset=utf-8',

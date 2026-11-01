@@ -128,10 +128,3 @@ main { width: min(1160px, calc(100% - 64px)); margin: 0 auto; min-height: calc(1
 
 .initially-hidden { display: none; }
 .link-field--spaced { margin-top: 13px; }
-
-/* Screen/system audio controls (sound is always opt-in for viewers). */
-.audio-option { display: flex; align-items: center; gap: 11px; color: #e5edfd; font-size: 13px; font-weight: 610; cursor: pointer; margin: 0 0 10px; }
-.audio-option input { appearance: auto; width: 17px; height: 17px; margin: 0; accent-color: #7695ff; cursor: pointer; flex: none; }
-.audio-note { font-size: 11px; line-height: 1.6; color: #98a9c5; margin: 0 0 17px; }
-.audio-note b { color: #e0e9fa; }
-.sound-control { margin-bottom: 10px; }

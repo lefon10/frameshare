@@ -13,7 +13,6 @@ const icons = {
   monitor: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 22h8m-4-4v4"/></svg>',
   link: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.1 0l2.1-2.1a5 5 0 0 0-7.1-7.1l-1.2 1.2"/><path d="M14 11a5 5 0 0 0-7.1 0l-2.1 2.1a5 5 0 0 0 7.1 7.1l1.2-1.2"/></svg>',
   shield: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 22 7-4V6l-7-4-7 4v12z"/><path d="m9 12 2 2 4-4"/></svg>',
-  audioOn: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15 9a5 5 0 0 1 0 6"/><path d="M18 6a9 9 0 0 1 0 12"/></svg>',
   audioOff: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 9H5v6h4l5 4V5l-2 1.6M3 3l18 18"/><path d="M17 9a4 4 0 0 1 .6 4"/></svg>',
   arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>',
   copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>',
@@ -53,11 +52,11 @@ function landingPage() {
     <section class="landing">
       <div class="eyebrow">THE SIMPLEST WAY TO SHOW SOMEONE</div>
       <h1>Your screen.<br><span class="gradient-text">Their window.</span></h1>
-      <p class="lead">Share your screen and optional computer audio, instantly. One link, no downloads, no sign-ups, and no microphone.</p>
+      <p class="lead">Share exactly what’s on your computer, instantly. One link, no downloads, no sign-ups, and absolutely no audio.</p>
       <div class="actions"><button class="btn btn-primary" id="create-room">${icons.monitor} Create a sharing room ${icons.arrow}</button></div>
       <div class="landing-features">
         <div class="feature"><div class="feature-icon">${icons.link}</div><strong>One simple link</strong><p>Send a viewer link and they can watch in their browser.</p></div>
-        <div class="feature"><div class="feature-icon">${icons.audioOn}</div><strong>Optional audio</strong><p>Share the sound from a tab or your computer when your browser allows it. No microphone.</p></div>
+        <div class="feature"><div class="feature-icon">${icons.audioOff}</div><strong>Screen only</strong><p>Just your screen. No microphone or audio tracks.</p></div>
         <div class="feature"><div class="feature-icon">${icons.shield}</div><strong>You're in control</strong><p>Choose a screen or window, and stop whenever you want.</p></div>
       </div>
     </section>`;
@@ -100,7 +99,7 @@ function sessionPage(isHost) {
             <div class="stage-live"><span class="green-dot"></span>${isHost ? 'YOU ARE SHARING' : 'LIVE SCREEN'}</div>
           </div>
           <div id="status" class="stream-status"><span class="status-light"></span><span>${isHost ? 'Not sharing yet' : 'Connecting to room…'}</span></div>
-          <div class="info-strip"><b>${isHost ? 'A quick heads-up:' : 'Good to know:'}</b> ${isHost ? 'Only share a window or screen you’re comfortable showing. Anyone with the viewer link can watch while you share.' : 'This is a one-way screen share. The host may include tab or computer sound, but there is no microphone, chat, or remote control.'}</div>
+          <div class="info-strip"><b>${isHost ? 'A quick heads-up:' : 'Good to know:'}</b> ${isHost ? 'Only share a window or screen you’re comfortable showing. Anyone with the viewer link can watch while you share.' : 'This is a one-way screen share, with no audio, chat, or remote control.'}</div>
         </div>
         <aside>
           ${isHost ? `
@@ -108,8 +107,6 @@ function sessionPage(isHost) {
             <div class="panel-kicker">01 / SHARE YOUR SCREEN</div>
             <h2 class="panel-title">Start presenting</h2>
             <p class="panel-copy">Your browser will let you pick a display, tab, or window. You can stop at any time.</p>
-            <label class="audio-option"><input type="checkbox" id="include-audio" checked><span>Include tab / computer audio</span></label>
-            <p class="audio-note" id="host-audio-status" role="status">In Chrome or Edge, choose <b>Share tab audio</b> or <b>Share system audio</b> in the browser popup. Your microphone is never used.</p>
             <button class="btn btn-primary wide" disabled id="start-share">${icons.monitor} Start sharing</button>
             <button class="btn btn-danger wide initially-hidden" id="stop-share">${icons.stop} Stop sharing</button>
             <div class="panel-divider"></div>
@@ -125,9 +122,7 @@ function sessionPage(isHost) {
           <div class="session-panel">
             <div class="panel-kicker">WATCH MODE</div>
             <h2 class="panel-title">You're connected to a room</h2>
-            <p class="panel-copy">As soon as the host shares, the video will play here. Turn on sound if the host included audio.</p>
-            <button class="btn btn-secondary wide sound-control" id="toggle-sound" disabled>${icons.audioOff} Waiting for shared audio</button>
-            <p class="audio-note" id="viewer-audio-status" role="status">Sound is off until you choose to enable it.</p>
+            <p class="panel-copy">As soon as the host shares, the video will play here. No audio is transmitted.</p>
             <button class="btn btn-primary wide" id="fullscreen">${icons.expand} View fullscreen</button>
             <div class="panel-divider"></div>
             <div class="panel-kicker">INVITE LINK</div>
@@ -139,7 +134,6 @@ function sessionPage(isHost) {
     </section>`;
   document.getElementById('share-url').value = viewerUrl;
   document.getElementById('copy-link').addEventListener('click', copyLink);
-  if (!isHost) document.getElementById('toggle-sound').addEventListener('click', toggleViewerSound);
   if (!isHost) document.getElementById('fullscreen').addEventListener('click', () => {
     const video = document.getElementById('screen-video');
     if (!video.srcObject) { toast('The host has not started sharing yet.'); return; }
@@ -171,47 +165,6 @@ const hostPeers = new Map();
 let viewerPeer = null;
 let preOfferCandidates = [];
 let hostIsSharing = false;
-let viewerSoundEnabled = false;
-
-function setHostAudioStatus(message) {
-  const status = document.getElementById('host-audio-status');
-  if (status) status.textContent = message;
-}
-
-function refreshViewerSound() {
-  const button = document.getElementById('toggle-sound');
-  const status = document.getElementById('viewer-audio-status');
-  if (!button || !status) return;
-  const video = document.getElementById('screen-video');
-  const hasAudio = !!video.srcObject?.getAudioTracks().some(track => track.readyState === 'live');
-  button.disabled = !hasAudio;
-  if (!hasAudio) {
-    viewerSoundEnabled = false;
-    video.muted = true;
-    button.innerHTML = `${icons.audioOff} Waiting for shared audio`;
-    status.textContent = 'The host has not shared an audio track. For sound, they must select the audio option when sharing.';
-  } else {
-    button.innerHTML = viewerSoundEnabled ? `${icons.audioOn} Mute sound` : `${icons.audioOff} Enable sound`;
-    status.textContent = viewerSoundEnabled ? 'Playing audio from the shared tab or screen.' : 'Audio is available. Click Enable sound to hear it.';
-  }
-}
-
-async function toggleViewerSound() {
-  const video = document.getElementById('screen-video');
-  if (!video.srcObject?.getAudioTracks().some(track => track.readyState === 'live')) return;
-  viewerSoundEnabled = !viewerSoundEnabled;
-  video.muted = !viewerSoundEnabled;
-  refreshViewerSound();
-  if (viewerSoundEnabled) {
-    try { await video.play(); } catch {
-      viewerSoundEnabled = false;
-      video.muted = true;
-      refreshViewerSound();
-      toast('Your browser blocked audio playback. Click Enable sound again.');
-    }
-  }
-}
-
 
 function signal(to, data) { sendWs({ type: 'signal', to, data }); }
 function sendWs(message) {
@@ -232,26 +185,14 @@ function makePeer(to, isHost) {
     }
   };
   if (!isHost) {
-    // Audio and video arrive as separate 'track' events; keep both in one MediaStream.
-    entry.remoteStream = new MediaStream();
     pc.ontrack = event => {
-      if (viewerPeer !== entry) return;
       const video = document.getElementById('screen-video');
-      if (!entry.remoteStream.getTracks().some(track => track.id === event.track.id)) {
-        entry.remoteStream.addTrack(event.track);
-      }
-      video.srcObject = entry.remoteStream;
-      video.muted = !viewerSoundEnabled; // Muted autoplay works until the viewer opts in to sound.
-      if (event.track.kind === 'video') {
-        video.play().catch(() => {});
-        setVideoVisible(true);
-        setStatus('Watching live screen', 'live');
-      }
-      refreshViewerSound();
+      video.srcObject = event.streams[0] || new MediaStream([event.track]);
+      video.play().catch(() => {});
+      setVideoVisible(true);
+      setStatus('Watching live screen', 'live');
       event.track.addEventListener('ended', () => {
-        if (viewerPeer !== entry) return;
-        if (event.track.kind === 'video') clearViewerVideo();
-        else refreshViewerSound();
+        if (viewerPeer === entry) clearViewerVideo();
       }, { once: true });
     };
   }
@@ -276,9 +217,6 @@ function clearViewerVideo() {
   video.pause();
   video.srcObject = null;
   setVideoVisible(false);
-  viewerSoundEnabled = false;
-  video.muted = true;
-  refreshViewerSound();
 }
 
 function clearViewerPeer() {
@@ -307,7 +245,7 @@ async function offerToViewer(id) {
   const entry = makePeer(id, true);
   hostPeers.set(id, entry);
   try {
-    for (const track of displayStream.getTracks()) entry.pc.addTrack(track, displayStream);
+    for (const track of displayStream.getVideoTracks()) entry.pc.addTrack(track, displayStream);
     const offer = await entry.pc.createOffer();
     await entry.pc.setLocalDescription(offer);
     if (hostPeers.get(id) === entry) signal(id, { description: entry.pc.localDescription });
@@ -356,26 +294,9 @@ async function startSharing() {
   startButton.disabled = true;
   try {
     if (!navigator.mediaDevices?.getDisplayMedia) throw new Error('Screen sharing needs a supported browser and HTTPS (or localhost).');
-    // Browser-provided capture audio is tab/system audio, not microphone input.
-    const includeAudio = document.getElementById('include-audio').checked;
-    const stream = await navigator.mediaDevices.getDisplayMedia({
-      video: { frameRate: 24 },
-      audio: includeAudio ? { suppressLocalAudioPlayback: false } : false,
-      systemAudio: includeAudio ? 'include' : 'exclude'
-    });
+    const stream = await navigator.mediaDevices.getDisplayMedia({ video: { frameRate: 24 }, audio: false });
     if (!joined) { stream.getTracks().forEach(track => track.stop()); return; }
     displayStream = stream;
-    if (!includeAudio) {
-      setHostAudioStatus('Sharing video only. Sound was disabled in FrameShare.');
-    } else if (stream.getAudioTracks().length) {
-      setHostAudioStatus('Audio is being shared. Viewers can choose to enable sound.');
-    } else {
-      setHostAudioStatus('No audio captured. To share sound, stop and restart, then select tab/system audio in the browser popup.');
-      toast('Screen started without sound. Select Share tab/system audio to include it.');
-    }
-    for (const audioTrack of stream.getAudioTracks()) {
-      audioTrack.addEventListener('ended', () => setHostAudioStatus('The shared audio track stopped.'), { once: true });
-    }
     document.getElementById('screen-video').srcObject = stream;
     document.getElementById('screen-video').play().catch(() => {});
     setVideoVisible(true);
@@ -402,7 +323,6 @@ function stopSharing(notify = true) {
   video.srcObject = null;
   setVideoVisible(false);
   setStatus('Not sharing yet');
-  setHostAudioStatus('Choose Share tab audio or Share system audio in the browser popup when starting a new share.');
   document.getElementById('start-share').style.display = 'inline-flex';
   document.getElementById('stop-share').style.display = 'none';
   if (notify) sendWs({ type: 'sharing-stopped' });
